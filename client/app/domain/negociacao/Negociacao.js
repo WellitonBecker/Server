@@ -40,8 +40,12 @@ class Negociacao {
         return this._valor;
     }
 
+    get volume (){
+        return this.obterVolume();
+    }
+
     obterVolume() {
-        return this.getQuantidade() * this.getValor();
+        return this._quantidade * this._valor;
     }
 
 }
