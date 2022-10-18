@@ -2,11 +2,27 @@ class NegociacaoController {
 
     constructor(){
         const $ = document.querySelector.bind(document);
+        const self = this;
 
         this._inputData = $('#data');
         this._inputQtde = $('#quantidade');
         this._inputValor = $('#valor');
         // this._negociacoes = new Negociacoes(this, (model) => this._negociacoesView.update(model));
+        this._negociacoes = new Proxy(new Negociacoes(), {
+            get(target, prop, receiver){
+                if(typeof(target[prop]) == typeof (Function) && ['adiciona', 'esvazia'].includes(prop)){
+                    return () => {
+                        target[prop].apply(target, arguments);
+                        self._negociacoesView.update(target);
+                    }
+                } else {
+                    return target[prop];
+                }
+            },
+            set(target, prop, value, receiver){
+                return Reflect.set(target, prop, value);
+            }
+        })
         this._negociacoesView = new NegociacoesView('#negociacoes');
 
         this._mensagem = new Mensagem();
