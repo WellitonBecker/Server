@@ -1,9 +1,7 @@
 class Negociacoes {
 
     constructor() {
-        Object.assign(this, {
-            _negociacoes : []
-        });
+        this._negociacoes = [];
         Object.freeze(this);
     }
 
