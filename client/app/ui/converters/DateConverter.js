@@ -9,6 +9,9 @@ class DateConverter {
     }
 
     static paraData(texto) {
-        return new Date(...texto.split('-').map((item, indice) => item - (indice % 2)));
+        if(!/\d{2}\/\d{2}\/\d{4}/.test(texto)){
+            throw new DataInvalidaException("Deve estar no formato dd/mm/aaaa")
+        }
+        return new Date(...texto.split('/').reverse().map((item, indice) => item - (indice % 2)));
     }
 }
